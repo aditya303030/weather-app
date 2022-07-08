@@ -9,7 +9,7 @@ const fetchRandonData = () => {
     .then(({data}) => {
       // handle success
       console.log(data);
-      return JSON.stringify(data,null,2) 
+      return data; 
     })
     .catch((err) => {
       // handle error
@@ -17,30 +17,36 @@ const fetchRandonData = () => {
     })
 }
 
-function App() {
-  // const [resource,setResource] = useState('posts')
-  // const [items,setItems] = useState([])
+const getUserInfo = (userInfo) => {
+  // return userInfo.
+  // const userName =
+  const {name:{first,last}} = userInfo;
+  return `${first} ${last}` 
+}
 
-  // useEffect(()=>{
-  //   fetch(`https://jsonplaceholder.typicode.com/${resource}`)
-  //     .then(response => response.json())
-  //     .then(json => setItems(json))
-  // },[resource])
+function App() {
+
   const [data,setdata] = useState('')
+  const [userInfos,setUserInfos] = useState([])
+
   useEffect(()=> {
     fetchRandonData().then((randomdata)=> {
-      setdata(randomdata)
+      setdata(JSON.stringify(randomdata,null,2))
+      setUserInfos(randomdata.results)
     })
   },[])
+  console.log(userInfos)
   return (
     <>
       <div className="App">
-        {/* <button onClick={()=> setResource('posts')}>posts</button>
-        <button onClick={()=> setResource('comments')}>comments</button>
-        <button onClick={()=> setResource('users')}>users</button> */}
         <pre>
           {data}
         </pre>
+        {/* {
+          userInfos.map((userInfo,id)=> {
+            return <pre key={id}>{getUserInfo(userInfo)}</pre>
+          })
+        } */}
       </div>
     </>
   );
