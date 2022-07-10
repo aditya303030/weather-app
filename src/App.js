@@ -1,4 +1,5 @@
 import React,{useEffect,useState} from 'react';
+import axios from 'axios';
 import './App.css';
 
 //https://randomuser.me/api
@@ -9,28 +10,32 @@ function App() {
   const [userdata,setuserData] = useState([]);
   
   const fetchData = () => {
-    fetch('https://api.randomuser.me/')
-      .then(response => response.json())
-      .then(data => setuserData(data.results))
-      .catch(error=>console.log(error))
+    axios.get('https://api.randomuser.me/')
+      .then(response=> setuserData(response.data.results[0].name))
+      .then(data => data)
+      .catch(error => console.error(error))
   }
-  // const getUserInfo = () =>{
-
-  // }
-  console.log(userdata)
+  
   useEffect(()=>{
     fetchData()
   },[])
+  console.log(userdata)
+  
+  if (userdata) {
+    return (
+      <>
+        <button>Next user data</button>
+        <p>{userdata.title}</p>
+        <p>{userdata.first}</p>
+        <p>{userdata.last}</p>
+        <img />
+      </>
+    )
+  }
 
   return (
     <>
-    <div>
-      {/* {
-        data.map((entry,idx)=>{
-          return <pre key={idx}>{entry}</pre>
-        })
-      } */}
-    </div>
+      <p>No user data</p>
     </>
   );
 }
