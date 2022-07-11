@@ -8,27 +8,30 @@ import './App.css';
 
 function App() {
   const [userdata,setuserData] = useState([]);
+  const [userpicture,setuserpicture] = useState();
   
   const fetchData = () => {
     axios.get('https://api.randomuser.me/')
-      .then(response=> setuserData(response.data.results[0].name))
+      .then((response) => {
+        setuserData(response.data.results[0].name)
+        setuserpicture(response.data.results[0].picture.large)
+      })
       .then(data => data)
       .catch(error => console.error(error))
   }
   
-  useEffect(()=>{
-    fetchData()
-  },[])
-  console.log(userdata)
+  // useEffect(()=>{
+  //   fetchData()
+  // },[])
   
   if (userdata) {
     return (
       <>
-        <button>Next user data</button>
+        <button onClick={fetchData}>Next user data</button>
         <p>{userdata.title}</p>
         <p>{userdata.first}</p>
         <p>{userdata.last}</p>
-        <img />
+        <img src={userpicture} />
       </>
     )
   }
