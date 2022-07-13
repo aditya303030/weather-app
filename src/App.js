@@ -3,40 +3,46 @@ import axios from 'axios';
 import './App.css';
 
 //api link
-// https://hub.dummyapis.com/employee?noofrecords=10&idStarts=1001
+//https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid={cbba97b5444bbc7799753a7e3e2456b2}
 
 function App() {
 
   //states
-  const [randomJSONdata,setrandomJSONdata] = useState([])
 
-  const fetchData = () => {
-    const url = 'https://hub.dummyapis.com/employee?noofrecords=10&idStarts=1001'
+  const [weatherJSON,setweatherJSON] = useState('')
+
+  const fetchAPIdata = () => {
+    // const url =  `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=cbba97b5444bbc7799753a7e3e2456b2`
+    const url = 'https://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=cbba97b5444bbc7799753a7e3e2456b2'
     axios.get(url)
       .then((res) => {
-        setrandomJSONdata(res.data)
         console.log(res.data)
+        setweatherJSON(res.data)
       })
       .catch((err)=>{
         console.log(err)
       })
   }
 
-  useEffect(() => {
-    fetchData()
+  useEffect(()=>{
+    fetchAPIdata()
   },[])
 
   return(
     <>
-      <div>
-        {randomJSONdata.map((datax,idx) => {
-          return <p key={idx}>{datax.firstName}</p>
-          // <img src={datax.imageurl} />
-        })}
-        {randomJSONdata.map((datax,idx) => {
-          // return <p key={idx}>{datax.firstName}</p>
-          return <img key={idx} src={datax.imageUrl} alt="no pic found"/>
-        })}
+      <div className='container'>
+        {/* <h1>Name: </h1>{weatherJSON.name}
+        <h1>Weather: </h1>
+        <h1>Wind: </h1>
+        <h2>Deg: </h2> {weatherJSON.wind.deg} */}
+        
+        <h1>Name: </h1> {weatherJSON.name}
+        <h1>Wind: </h1>
+        <h2>Deg: </h2> {weatherJSON.wind.deg} 
+
+        {/* <input onChange={(event)=> setlatitude(event.target.value)} placeholder='Enter latitude'></input>
+        <input onChange={(event)=> setlongitude(event.target.value)} placeholder='Enter longitude'></input>
+        <button onClick={handleSubmit} type='submit'>Submit</button> */}
       </div>
     </>
   )
