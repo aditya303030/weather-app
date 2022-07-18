@@ -1,5 +1,5 @@
-import React,{useEffect,useState} from 'react';
 import axios from 'axios';
+import React, { useState } from 'react';
 import './App.css';
 
 //api link
@@ -8,41 +8,38 @@ import './App.css';
 function App() {
 
   //states
+  const [latitude,setLatitude] = useState('')
+  const [longitude, setLongitude] = useState('')
+  const [weatherData, setWeatherData] = useState([])
 
-  const [weatherJSON,setweatherJSON] = useState('')
-
-  const fetchAPIdata = () => {
-    // const url =  `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=cbba97b5444bbc7799753a7e3e2456b2`
-    const url = 'https://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=cbba97b5444bbc7799753a7e3e2456b2'
+  const fetchData = () => {
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=cbba97b5444bbc7799753a7e3e2456b2`
     axios.get(url)
-      .then((res) => {
-        console.log(res.data)
-        setweatherJSON(res.data)
+      .then(response => {
+        console.log(response.data)
+        const weatherJSON = JSON.stringify(response.data)
+        console.log(weatherJSON)
+        setWeatherData(weatherJSON)
       })
-      .catch((err)=>{
-        console.log(err)
+      .catch(error => {
+        console.log(error)
       })
   }
-
-  useEffect(()=>{
-    fetchAPIdata()
-  },[])
 
   return(
     <>
       <div className='container'>
-        {/* <h1>Name: </h1>{weatherJSON.name}
-        <h1>Weather: </h1>
-        <h1>Wind: </h1>
-        <h2>Deg: </h2> {weatherJSON.wind.deg} */}
-        
-        <h1>Name: </h1> {weatherJSON.name}
-        <h1>Wind: </h1>
-        <h2>Deg: </h2> {weatherJSON.wind.deg} 
-
-        {/* <input onChange={(event)=> setlatitude(event.target.value)} placeholder='Enter latitude'></input>
-        <input onChange={(event)=> setlongitude(event.target.value)} placeholder='Enter longitude'></input>
-        <button onClick={handleSubmit} type='submit'>Submit</button> */}
+        Longitude:
+        <input onChange={(e) => setLongitude(e.target.value)} />
+        Latitude:
+        <input onChange={(e) => setLatitude(e.target.value)} />
+        <button  onClick ={fetchData} type="submit" >Submit</button>
+        {weatherData.name}
+        <div className='weather-data'>
+          <div className='name'>
+            {/* {weatherData} */}
+          </div>
+        </div>
       </div>
     </>
   )
