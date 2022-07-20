@@ -17,9 +17,9 @@ function App() {
     axios.get(url)
       .then(response => {
         console.log(response.data)
-        const weatherJSON = JSON.stringify(response.data)
-        console.log(weatherJSON)
-        setWeatherData(weatherJSON)
+        const data = response.data
+        const weatherJSON = data
+        setWeatherData({weatherJSON})
       })
       .catch(error => {
         console.log(error)
@@ -34,10 +34,18 @@ function App() {
         Latitude:
         <input onChange={(e) => setLatitude(e.target.value)} />
         <button  onClick ={fetchData} type="submit" >Submit</button>
-        {weatherData.name}
+        <div className='JSON'>
+          <h1>Raw JSON</h1>
+          {/* {weatherData} */}
+        </div>
         <div className='weather-data'>
           <div className='name'>
-            {/* {weatherData} */}
+            <h2>Name</h2>
+            {weatherData.name}
+            <h2>Temperature</h2>
+           
+            <h2>Weather</h2>
+            {weatherData.weather[0].description}
           </div>
         </div>
       </div>

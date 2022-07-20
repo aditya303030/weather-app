@@ -1,5 +1,5 @@
 body {
-  margin: 1rem;
+  margin: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,5 +23,5 @@ body {
 }
 
 .container input:focus {
-  background: rgb(183, 168, 168);
+  background: rgb(228, 220, 220);
 }
