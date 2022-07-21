@@ -25,3 +25,10 @@ body {
 .container input:focus {
   background: rgb(228, 220, 220);
 }
+
+.containerx {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  flex-basis: auto;
+}
