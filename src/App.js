@@ -6,9 +6,6 @@ import './App.css';
 //https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid={cbba97b5444bbc7799753a7e3e2456b2}
 
 function App() {
-
-  
-
   //states
   const [userInfo,setUserInfo] = useState([])
   const [loading, setLoading] = useState(false);
@@ -31,27 +28,28 @@ function App() {
   //   })
   // },[])
 
-  useEffect(() => {
-    const fetchRandomData = async () => {
-      setLoading(true)
-      const url = 'https://jsonplaceholder.typicode.com/users'
-      const response = await axios.get(url)
-      setUserInfo(response.data)
-      setLoading(false)
-    }
-    fetchRandomData()
-  },[])
+  //https://randomuser.me/api
   
+  const fetchRandomData = async () => {
+    setLoading(true)
+    const url = 'https://randomuser.me/api'
+    const response = await axios.get(url)
+    setUserInfo(response.data.results)
+    setLoading(false)
+  }
+  // fetchRandomData()
+
   console.log(userInfo)
 
   return(
     <>
+      <button onClick={fetchRandomData}>Fetch Random Data</button>
       {loading ? (
         <h4>Loading...</h4>) :
         (userInfo.map((item,idx) =>
             // Presently we only fetch 
             // title from the API 
-            <h4 key={idx}>{item.name}</h4>)
+            <h4 key={idx}>{item.name.first}</h4>)
         )
       }
     </> 
